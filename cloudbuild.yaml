@@ -5,6 +5,5 @@ steps:
   - functions
   - deploy
   - sd-datasync
-  - --region=us-central1
-  - --source=.
+  - --runtime nodejs12
   - --trigger-http
