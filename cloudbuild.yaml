@@ -5,6 +5,6 @@ steps:
   - functions
   - deploy
   - sd-datasync
-  - --region=us-west1
+  - --region=us-central1
   - --source=.
   - --trigger-http
