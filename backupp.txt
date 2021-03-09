@@ -1,0 +1,90 @@
+// var http = require('http');
+
+// var server = http.createServer(function(request, response) {
+
+//     response.writeHead(200, {"Content-Type": "text/plain"});
+//     response.end("Hello World!");
+
+// });
+
+// var port = 800;
+// server.listen(port);
+
+// console.log("Server running at http://localhost:%d", port);
+
+
+const https = require('https')
+
+const escapeHtml = require('escape-html');
+
+/**
+ * Responds to an HTTP request using data from the request body parsed according
+ * to the "content-type" header.
+ *
+ * @param {Object} req Cloud Function request context.
+ * @param {Object} res Cloud Function response context.
+ */
+exports.helloworld = (req, res) => {
+  let name;
+
+  switch (req.get('content-type')) {
+    // '{"name":"John"}'
+    case 'application/json':
+      ({name} = req.body);
+      break;
+
+    // 'John', stored in a Buffer
+    case 'application/octet-stream':
+      name = req.body.toString(); // Convert buffer to a string
+      break;
+
+    // 'John'
+    case 'text/plain':
+      name = req.body;
+      break;
+
+    // 'name=John' in the body of a POST request (not the URL)
+    case 'application/x-www-form-urlencoded':
+      ({name} = req.body);
+      break;
+  }
+
+  const message = Buffer.from(req.body.message.data, 'base64').toString(
+    'utf-8'
+  );
+
+  //https://cloud.google.com/appengine/docs/flexible/nodejs/writing-and-responding-to-pub-sub-messages
+
+  console.log(message);
+
+  console.log(JSON.stringify(req.body.message));
+  console.log(JSON.stringify(req.body.message.data));
+  console.log( `Hssello ${escapeHtml(name || ' == data')}!`);
+
+  res.status(500).send(`Hssello ${escapeHtml(name || 'Wordsdsdsallld')}!`);
+
+  request.post('http://service.com/upload', {form:{key:'value'}})
+
+  const options = {
+    hostname: 'http://10.46.65.30:3200',
+    port: 443,
+    path: '/api/Entity',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  }
+  
+  const req2 = https.request(options, res => {
+    console.log(`statusCode: ${res.statusCode}`)
+  
+    // res.on('data', d => {
+    //   process.stdout.write(d)
+    // })
+  })
+  
+  req2.on('error', error => {
+    console.error(error)
+  })
+
+};
