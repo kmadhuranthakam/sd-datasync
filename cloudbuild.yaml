@@ -5,5 +5,6 @@ steps:
   - functions
   - deploy
   - sd-datasync
-  - --runtime nodejs12
+  - --runtime=nodejs12
   - --trigger-http
+  - --entry-point=helloworld
